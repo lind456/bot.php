@@ -1,13 +1,36 @@
-<?php
-
-$telegram = json_decode(
-    file_get_contents("https://api.telegram.org/bot363917637:AAFwlPFn7Odr9-tqqi29iE81tvFo2x_i7rY/getMe")
-);
-
-if($telegram->ok == true){
-    echo "<h1>اطلاعات ربات</h1>";
-    echo "<b>نام کاربری </b>: ".$telegram->result->username;
-    echo "<br/><b> نام ربات </b>: ".$telegram->result->first_name;
-}else{
-    echo "مشکلی پیش آمد";
+&amp;lt;?php
+ini_set('error_reporting', 'E_ALL');
+ 
+$botToken = "273759407:AAEOqgo3I5nob3jIGzkY1ihguhPbXl945RQ";
+$webSite = "https://api.telegram.org/bot" . $botToken;
+ 
+$update = file_get_contents("php://input");
+$update = json_decode($update, TRUE);
+ 
+$chatId = $update["message"]["chat"]["id"];
+$message = $update["message"]["text"];
+ 
+switch ($message) {
+ 
+ case "/start":
+ sendMessage($chatId, "شروع می کنیم");
+ break;
+ case "salam":
+ sendMessage($chatId, "salam be ruye mahet");
+ break;
+ default:
+ sendMessage($chatId, "chi migi ??");
+ 
 }
+ 
+ 
+function sendMessage($chatId, $message)
+{
+ 
+ $url = $GLOBALS['webSite'] . "/sendMessage?chat_id=" . $chatId . "&amp;amp;text=" . urlencode($message);
+ file_get_contents($url);
+ 
+ 
+}
+ 
+?&amp;gt;
